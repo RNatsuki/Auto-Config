@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Verificar que se proporcionaron los argumentos
+if [ "$#" -ne 2 ]; then
+  echo "Uso: $0 <usuario> <contraseña>"
+  exit 1
+fi
+
+USUARIO=$1
+CONTRASENA=$2
+
 # Actualizar el sistema
 echo "Actualizando el sistema..."
 sudo pacman -Syu --noconfirm
@@ -78,8 +87,8 @@ EOF
 
 # Crear usuario y otorgar permisos
 echo "Creando usuario y otorgando permisos..."
-sudo mysql -e "CREATE USER 'ibarra'@'localhost' IDENTIFIED BY 'ibarra12';"
-sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'ibarra'@'localhost' WITH GRANT OPTION;"
+sudo mysql -e "CREATE USER '$USUARIO'@'localhost' IDENTIFIED BY '$CONTRASENA';"
+sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO '$USUARIO'@'localhost' WITH GRANT OPTION;"
 sudo mysql -e "FLUSH PRIVILEGES;"
 
 echo "Instalación y configuración completadas."
